@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  artrecapi:
+    container_name: artrecapi
+    restart: always
+    build: ./artrecapi
+    ports:
+      - "8484:8484"
+    command: gunicorn -w 1 -b :8484 application:application
+
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - artrecapi
